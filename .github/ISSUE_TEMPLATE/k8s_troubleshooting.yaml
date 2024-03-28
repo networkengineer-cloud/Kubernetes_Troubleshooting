@@ -1,0 +1,32 @@
+name: K8s Troubleshooting
+description: Use this template to deploy resource to troubleshoot Kubernetes issues
+title: "[Troubleshooting] "
+labels:
+  - kind/troubleshooting
+  - area/k8s
+  - priority/important-soon
+body:
+  - type: input
+    id: cluster_name
+    attributes:
+      label: Cluster Name
+      description: Name of the cluster where the issue is happening
+      placeholder: Cluster Name
+    validations:
+      required: true
+  - type: input
+    id: duration
+    attributes:
+      label: Duration
+      description: How long is access needed to the cluster for troubleshooting in hours
+      placeholder: 1
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe the issue you are facing
+      placeholder: Describe the issue you are facing
+    validations:
+      required: true
