@@ -20,19 +20,18 @@ jobs:
             template-path: .github/ISSUE_TEMPLATE/k8s_troubleshooting.yml
         
         - run: cat ${HOME}/issue-parser-result.json
-        - run: echo $AZURE_SUBSCRIPTION_ID
+          
+        - uses: Azure/login@v2.0.0
           env:
             AZURE_SUBSCRIPTION_ID: ${{ steps.issue-parser.outputs.issueparser_subscription_id }}
-
-        - uses: Azure/login@v2.0.0
           with:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-            subscription-id: ${{ steps.issue-parser.outputs.issueparser_subscription_id }}
+            subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
         
         - name: Creat resource group
           uses: azure/CLI@v2.0.0
           with:
             inlineScript: |
-                az graph query -q "where type == 'microsoft.resources/subscriptions/resourceGroups' | project name" -o tsv
+                az graph query -q 'resourcecontainers | where type == "microsoft.resources/subscriptions/resourcegroups" | project name' -o table
 
