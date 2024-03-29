@@ -9,13 +9,10 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            
             - uses: azure/login@v1
               with:
                   creds: ${{ secrets.AZURE_CREDENTIALS }}
-            - run: az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-            - run: az group create --name ${{ secrets.AZURE_RESOURCE_GROUP }} --location ${{ secrets.AZURE_LOCATION }}
-            - run: az container create --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_CONTAINER_NAME }} --image ${{ secrets.AZURE_CONTAINER_IMAGE }} --vnet ${{ secrets.AZURE_VNET_NAME }} --subnet ${{ secrets.AZURE_SUBNET_NAME }} --ip-address Private --dns-name-label ${{ secrets.AZURE_DNS_NAME_LABEL }} --environment-variables ${{ secrets.AZURE_CONTAINER_ENV_VARS }}
-```
+            
 
 
