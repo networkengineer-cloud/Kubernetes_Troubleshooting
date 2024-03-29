@@ -15,6 +15,7 @@ env:
 jobs:
     job01:
         runs-on: ubuntu-latest
+        environment: main
         steps:
         - uses: Azure/login@v2.0.0
           with:
