@@ -20,6 +20,9 @@ jobs:
             template-path: .github/ISSUE_TEMPLATE/k8s_troubleshooting.yml
         
         - run: cat ${HOME}/issue-parser-result.json
+        - run: echo $AZURE_SUBSCRIPTION_ID
+          env:
+            AZURE_SUBSCRIPTION_ID: ${{ steps.issue-parser.outputs.issueparser_subscription_id }}
 
         - uses: Azure/login@v2.0.0
           env:
