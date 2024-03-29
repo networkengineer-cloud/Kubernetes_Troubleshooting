@@ -5,23 +5,29 @@ permissions:
   contents: read  # This is required for actions/checkout
 
 on:
-  push:
-    branches:
-    - main
-env: 
-  LOCATION: "northeurope"
-  RESOURCE_GROUP_NAME: "WIF-AppReg-Federation"
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
 
 jobs:
     job01:
         runs-on: ubuntu-latest
         environment: main
         steps:
+        - uses: stefanbuck/github-issue-parser@v3
+          id: issue-parser
+          with:
+            template-path: .github/ISSUE_TEMPLATE/k8s_troubleshooting.yml
+        
+        - run: cat ${HOME}/issue-parser-result.json
+
         - uses: Azure/login@v2.0.0
+          env:
+            AZURE_SUBSCRIPTION_ID: ${{ steps.issue-parser.outputs.issueparser_subscription_id }}
           with:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-            subscription-id: "3978865e-6ad6-4904-afd3-384f6857e1bf"
+            subscription-id: $AZURE_SUBSCRIPTION_ID
         
         - name: Creat resource group
           uses: azure/CLI@v2.0.0
