@@ -19,7 +19,7 @@ body:
     attributes:
       label: Duration
       description: How long is access needed to the cluster for troubleshooting in hours
-      placeholder: 1
+      placeholder: "1"
     validations:
       required: true
   - type: textarea
